@@ -28,6 +28,7 @@ def main():
             if excel_email_list is not None and gmail_sender != '':
                 with st.spinner('Running...'):
                     df = pd.read_excel(excel_email_list)
+                    st.write(df)
                     
                 st.success('Done!')
 
