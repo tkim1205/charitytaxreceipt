@@ -1,5 +1,4 @@
 pandas
-smtplib
 email.mime.text
 email.mime.multipart
 email.mime.application
