@@ -1,4 +1,4 @@
 xhtml2pdf
-streamlit
-sendgrid
-Pillow
+libcairo2-dev
+pkg-config
+python3-dev
