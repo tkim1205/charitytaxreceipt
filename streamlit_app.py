@@ -19,16 +19,23 @@ def main():
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
 
-    email_template = st.file_uploader("HTML File - Email Template", type='html', accept_multiple_files=False, disabled=False, label_visibility="visible")
-    tax_receipt_template = st.file_uploader("HTML File - Tax Receipt Template", type='html', accept_multiple_files=False, disabled=False, label_visibility="visible")
     excel_email_list = st.file_uploader("Excel File - Email List", type='xlsx', accept_multiple_files=False, disabled=False, label_visibility="visible")
+    email_template_file = st.file_uploader("HTML File - Email Template", type='html', accept_multiple_files=False, disabled=False, label_visibility="visible")
+    tax_receipt_template_file = st.file_uploader("HTML File - Tax Receipt Template", type='html', accept_multiple_files=False, disabled=False, label_visibility="visible")
 
-    if st.button("Rewordify"):
+
+    if st.button("Test Email"):
         try:
             if excel_email_list is not None and gmail_sender != '':
                 with st.spinner('Running...'):
                     df = pd.read_excel(excel_email_list)
                     st.write(df)
+
+                    email_template_html = file.read(email_template_file)
+                    tax_receipt_template_html = file.read(tax_receipt_template_file)
+                    
+                    st.write(email_template_html)
+                    st.write(tax_receipt_template_html)
                     
                 st.success('Done!')
 
