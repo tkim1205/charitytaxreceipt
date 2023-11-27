@@ -1,31 +1,16 @@
 #import requests
 import streamlit as st
+from fpdf import FPDF
 import pandas as pd
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 import datetime
-from xhtml2pdf import pisa
+#from xhtml2pdf import pisa
 
 st.set_page_config(page_title="Church Tax Recipt", page_icon="⛪")
 
-# Utility function
-def convert_html_to_pdf(source_html, output_filename):
-    # open output file for writing (truncated binary)
-    result_file = open(output_filename, "w+b")
-
-    # convert HTML to PDF
-    pisa_status = pisa.CreatePDF(
-            source_html,                # the HTML to convert
-            dest=result_file)           # file handle to recieve result
-
-    # close output file
-    result_file.close()                 # close output file
-
-    # return False on success and True on errors
-    return pisa_status.err
-    
 def main():
     st.title("Church Tax Recipt ⛪")
 
