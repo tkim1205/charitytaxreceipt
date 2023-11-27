@@ -1,6 +1,1 @@
-pandas
-email.mime.text
-email.mime.multipart
-email.mime.application
-datetime
 xhtml2pdf
