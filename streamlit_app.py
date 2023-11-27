@@ -12,7 +12,7 @@ import datetime
 smtp_server = "smtp.gmail.com"
 smtp_port = 587
 
-st.set_page_config(page_title="Church Tax Recipt", page_icon="⛪")
+st.set_page_config(page_title="Church Tax Recipt", page_icon="⛪", layout="wide")
 
 def main():
     st.title("Church Tax Recipt ⛪")
