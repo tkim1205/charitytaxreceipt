@@ -14,8 +14,8 @@ st.set_page_config(page_title="Church Tax Recipt", page_icon="⛪")
 def main():
     st.title("Church Tax Recipt ⛪")
 
-    gmail_sender = st.text_input('Sender Gmail Address')
-    gmail_app_pw = st.text_input('Gmail App Password')
+    gmail_sender = st.text_input('Sender Gmail Address', 'address@gmail.com')
+    gmail_app_pw = st.text_input('Gmail App Password', 'xjmq mhxs eqxd mvzh')
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
 
