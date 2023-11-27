@@ -1,4 +1,4 @@
-xhtml2pdf
 libcairo2-dev
 pkg-config
 python3-dev
+xhtml2pdf
