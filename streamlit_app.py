@@ -9,22 +9,30 @@ from email.mime.application import MIMEApplication
 import datetime
 #from xhtml2pdf import pisa
 
+smtp_server = "smtp.gmail.com"
+smtp_port = 587
+
 st.set_page_config(page_title="Church Tax Recipt", page_icon="⛪")
 
 def main():
     st.title("Church Tax Recipt ⛪")
 
-    gmail_sender = st.text_input('Sender Gmail Address', 'address@gmail.com')
-    gmail_app_pw = st.text_input('Gmail App Password', 'xjmq mhxs eqxd mvzh')
-    smtp_server = "smtp.gmail.com"
-    smtp_port = 587
+    col1, col2 = st.columns(2)
 
-    excel_email_list = st.file_uploader("Excel File - Email List", type='xlsx', accept_multiple_files=False, disabled=False, label_visibility="visible")
-    email_template_file = st.file_uploader("HTML File - Email Template", type='html', accept_multiple_files=False, disabled=False, label_visibility="visible")
-    tax_receipt_template_file = st.file_uploader("HTML File - Tax Receipt Template", type='html', accept_multiple_files=False, disabled=False, label_visibility="visible")
+    with col1:
+        gmail_sender = st.text_input('Sender Gmail Address', 'address@gmail.com')
+        gmail_app_pw = st.text_input('Gmail App Password', 'xjmq mhxs eqxd mvzh')
+        
 
+    with col2:
+        excel_email_list = st.file_uploader("Excel File - Email List", type='xlsx', accept_multiple_files=False, disabled=False, label_visibility="visible")
+        email_template_file = st.file_uploader("HTML File - Email Template", type='html', accept_multiple_files=False, disabled=False, label_visibility="visible")
+        tax_receipt_template_file = st.file_uploader("HTML File - Tax Receipt Template", type='html', accept_multiple_files=False, disabled=False, label_visibility="visible")
 
-    if st.button("Test Email"):
+    
+    test_mode = st.toggle('Test Mode')
+
+    if st.button("Preview"):
         try:
             if excel_email_list is not None and gmail_sender != '':
                 with st.spinner('Running...'):
