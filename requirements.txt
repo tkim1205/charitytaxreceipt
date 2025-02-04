@@ -2,3 +2,5 @@ fpdf
 openpyxl
 pdfkit
 wkhtmltopdf
+fpdf2
+fpdf2-html
