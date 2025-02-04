@@ -2,4 +2,4 @@ fpdf
 openpyxl
 pdfkit
 wkhtmltopdf
-fpdf2
+weasyprint
