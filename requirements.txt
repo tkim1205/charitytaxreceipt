@@ -2,6 +2,3 @@ fpdf
 openpyxl
 pdfkit
 wkhtmltopdf
-weasyprint
-cffi
-cairocffi

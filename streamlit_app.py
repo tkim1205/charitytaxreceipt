@@ -1,6 +1,4 @@
-#import requests
 import streamlit as st
-from fpdf import FPDF, HTMLMixin
 import pandas as pd
 import smtplib
 from email.mime.text import MIMEText
@@ -9,14 +7,16 @@ from email.mime.application import MIMEApplication
 import datetime
 from io import StringIO
 import pdfkit
-from weasyprint import HTML
-#from xhtml2pdf import pisa
+import os
 
 smtp_server = "smtp.gmail.com"
 smtp_port = 587
 
-# Specify the path to wkhtmltopdf if it's not in your PATH
-path_to_wkhtmltopdf = '/usr/local/bin/wkhtmltopdf'  # Update this path as needed
+# Path to wkhtmltopdf binary
+wkhtmltopdf_path = os.path.join(os.getcwd(), 'wkhtmltopdf', 'bin', 'wkhtmltopdf')
+if not os.path.isfile(wkhtmltopdf_path):
+    raise FileNotFoundError("wkhtmltopdf executable not found at %s" % wkhtmltopdf_path)
+# Configure pdfkit to use the binary
 config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
 
 # Get the current date and year
@@ -27,9 +27,6 @@ st.set_page_config(
     page_title="Church Tax Recipt", 
     page_icon="⛪"
 )
-
-class PDF(FPDF, HTMLMixin):
-    pass
 
 def main():
     st.title("Church Tax Recipt ⛪")
