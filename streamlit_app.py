@@ -27,7 +27,7 @@ def main():
 
     st.subheader("Gmail Configuration")
     gmail_sender = st.text_input('Sender Gmail', 'address@gmail.com')
-    gmail_app_pw = st.text_input('Gmail App Password', 'xjmq mhxs eqxd mvzh')
+    gmail_app_pw = st.text_input('Gmail App Password', 'abcd efgh ijkl mnop')
 
     st.subheader("Excel List")
     excel_email_list = st.file_uploader("Email List", type='xlsx', accept_multiple_files=False, disabled=False, label_visibility="visible")
