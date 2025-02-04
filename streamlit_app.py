@@ -115,6 +115,7 @@ def main():
                         # Apply CSS and add bordered class to the HTML content
                         st.markdown(border_css, unsafe_allow_html=True)
                         st.markdown(f'<div class="bordered">{email_html}</div>', unsafe_allow_html=True)
+                        st.markdown('#')
                         st.markdown(f'<div class="bordered">{tax_receipt_html}</div>', unsafe_allow_html=True)
 
                         break
