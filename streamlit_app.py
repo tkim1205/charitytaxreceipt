@@ -38,9 +38,9 @@ def main():
 
 
     st.subheader("Actions")
-    test_mode = st.toggle('Test Mode')
+    action_mode = st.selectbox('Select Mode', ['Preview', 'Send Test', 'Send Real'])
 
-    if st.button("Preview"):
+    if st.button("Submit"):
         try:
             if excel_email_list is not None and email_template_file is not None and tax_receipt_template_file is not None:
                 with st.spinner('Running...'):
