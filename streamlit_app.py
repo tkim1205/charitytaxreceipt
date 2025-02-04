@@ -65,7 +65,7 @@ def main():
                         province = row['Province']
                         postal = row['Postal Code']
                         email = row['Email']
-                        amount = row['Amount']
+                        amount = row['Donation Amount']
                         amount_float = float(amount)
                         amount_formatted = "{:,.2f}".format(amount_float)
                     
