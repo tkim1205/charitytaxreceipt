@@ -38,7 +38,7 @@ def main():
 
 
     st.subheader("Actions")
-    action_mode = st.selectbox('Select Mode', ['Preview', 'Send Test', 'Send Real'])
+    test_mode = st.radio('Select Mode', ['Preview', 'Send Test', 'Send Real'])
 
     if st.button("Submit"):
         try:
