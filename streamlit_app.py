@@ -106,7 +106,7 @@ def main():
                         border_css = """
                         <style>
                             .bordered {
-                                border: 2px solid black;
+                                border: 1px solid black;
                                 padding: 10px;
                             }
                         </style>
