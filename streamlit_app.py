@@ -57,7 +57,7 @@ def main():
 
                     # Iterate through each row and send emails
                     for index, row in df.iterrows():
-                        receipt_id = row['ID']
+                        receipt_id = row['Offering Number']
                         lastname = row['Last Name']
                         firstname = row['First Name']
                         address = row['Address']
