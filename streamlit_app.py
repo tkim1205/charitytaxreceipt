@@ -102,8 +102,20 @@ def main():
                         # Set output file name    
                         output_file_name = "TTHC - {year} Tax Receipt - {id}.pdf".format(year = current_year, id = receipt_id)
 
-                        st.markdown(email_html, unsafe_allow_html=True)
-                        st.markdown(tax_receipt_html, unsafe_allow_html=True)
+                        # Add CSS for border
+                        border_css = """
+                        <style>
+                            .bordered {
+                                border: 2px solid black;
+                                padding: 10px;
+                            }
+                        </style>
+                        """
+
+                        # Apply CSS and add bordered class to the HTML content
+                        st.markdown(border_css, unsafe_allow_html=True)
+                        st.markdown(f'<div class="bordered">{email_html}</div>', unsafe_allow_html=True)
+                        st.markdown(f'<div class="bordered">{tax_receipt_html}</div>', unsafe_allow_html=True)
 
                         break
                     
