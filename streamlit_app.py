@@ -1,6 +1,6 @@
 #import requests
 import streamlit as st
-from fpdf import FPDF
+from fpdf import FPDF, HTMLMixin
 import pandas as pd
 import smtplib
 from email.mime.text import MIMEText
@@ -21,6 +21,9 @@ st.set_page_config(
     page_title="Church Tax Recipt", 
     page_icon="⛪"
 )
+
+class PDF(FPDF, HTMLMixin):
+    pass
 
 def main():
     st.title("Church Tax Recipt ⛪")
@@ -125,7 +128,7 @@ def main():
                         # If action_mode is Send Test, then send email to the sender
                         elif action_mode == 'Send Test':
                             # Create a PDF file
-                            pdf = FPDF()
+                            pdf = PDF()
                             pdf.add_page()
                             pdf.set_font("Arial", size = 12)
                             pdf.write_html(tax_receipt_html)
