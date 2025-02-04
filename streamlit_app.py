@@ -45,7 +45,6 @@ def main():
     email_template_file = st.file_uploader("Email Message", type='html', accept_multiple_files=False, disabled=False, label_visibility="visible")
     tax_receipt_template_file = st.file_uploader("Tax Receipt", type='html', accept_multiple_files=False, disabled=False, label_visibility="visible")
 
-
     st.subheader("Actions")
     action_mode = st.radio('Select Mode', ['Preview', 'Send Test', 'Send Real'])
 
@@ -74,42 +73,40 @@ def main():
                         province = row['Province']
                         postal = row['Postal Code']
                         email = row['Email']
-                        amount = row['Donation Amount']
-                        amount_float = float(amount)
-                        amount_formatted = "{:,.2f}".format(amount_float)
-                    
-                    
+                        amount = row['Amount']
+                        amount_formatted = "${:,.2f}".format(amount)
+
                         # Email Subject
-                        subject = "Toronto True Hope Church - {year} Tax Receipt - {id}".format(year = current_year, id = receipt_id)
-                        
+                        subject = "Toronto True Hope Church - {year} Tax Receipt - {id}".format(year=current_year, id=receipt_id)
+
                         # Email Message
                         email_html = email_html_template.format(
-                            firstname = firstname,
-                            lastname = lastname,
-                            year = current_year)
-                        
+                            firstname=firstname,
+                            lastname=lastname,
+                            year=current_year)
+
                         # Tax Receipt
                         stage_tax_receipt_html = tax_receipt_html_template.format(
-                            receipt_id = receipt_id,
-                            lastname = lastname,
-                            firstname = firstname,
-                            address = address,
-                            city = city,
-                            province = province,
-                            postal = postal,
-                            email = email,
-                            amount = amount_formatted,
-                            date = current_date,
-                            year = current_year)
-                        
+                            receipt_id=receipt_id,
+                            lastname=lastname,
+                            firstname=firstname,
+                            address=address,
+                            city=city,
+                            province=province,
+                            postal=postal,
+                            email=email,
+                            amount=amount_formatted,
+                            date=current_date,
+                            year=current_year)
+
                         # Add line
                         html_line = """<br><hr style="margin-left: 75px; margin-right: 75px;"><br>"""
-                        
+
                         # Final HTML Content for Tax Receipt
                         tax_receipt_html = stage_tax_receipt_html + html_line + stage_tax_receipt_html
-                        
+
                         # Set output file name    
-                        output_file_name = "TTHC - {year} Tax Receipt - {id}.pdf".format(year = current_year, id = receipt_id)
+                        output_file_name = "TTHC - {year} Tax Receipt - {id}.pdf".format(year=current_year, id=receipt_id)
 
                         # If action_mode is Preview, then show the email and tax receipt
                         if action_mode == 'Preview':
@@ -126,7 +123,7 @@ def main():
                             # Apply CSS and add bordered class to the HTML content
                             st.markdown(border_css, unsafe_allow_html=True)
                             st.markdown(f'<div class="bordered">{email_html}</div>', unsafe_allow_html=True)
-                            st.markdown('#')
+                            st.markdown("<br>", unsafe_allow_html=True)
                             st.markdown(f'<div class="bordered">{tax_receipt_html}</div>', unsafe_allow_html=True)
 
                             break
@@ -135,7 +132,7 @@ def main():
                         elif action_mode == 'Send Test':
                             # Create a PDF file using pdfkit
                             pdfkit.from_string(tax_receipt_html, output_file_name, configuration=config)
-                            
+
                             # Send email
                             msg = MIMEMultipart()
                             msg['From'] = gmail_sender
@@ -143,31 +140,19 @@ def main():
                             msg['Subject'] = subject
                             msg.attach(MIMEText(email_html, 'html'))
                             with open(output_file_name, "rb") as f:
-                                attach = MIMEApplication(f.read(),_subtype="pdf")
-                                attach.add_header('Content-Disposition','attachment',filename=output_file_name)
+                                attach = MIMEApplication(f.read(), _subtype="pdf")
+                                attach.add_header('Content-Disposition', 'attachment', filename=output_file_name)
                             msg.attach(attach)
-                            
+
                             server = smtplib.SMTP(smtp_server, smtp_port)
                             server.starttls()
                             server.login(gmail_sender, gmail_app_pw)
                             server.send_message(msg)
                             server.quit()
                             st.success('Test email sent successfully!')
-                        
-                st.success('Done!')
-            
-            elif excel_email_list is None:
-                st.write("Please choose a valid Excel file")
 
-            elif email_template_file is None:
-                st.write("Please choose a valid Email Template file")
-
-            elif tax_receipt_template_file is None:
-                st.write("Please choose a valid Tax Receipt file")
-                
         except Exception as e:
-            st.write("Error occurred 😓")
-            st.exception(e)
-    
-if __name__ == '__main__': 
+            st.error(f"An error occurred: {e}")
+
+if __name__ == "__main__":
     main()
