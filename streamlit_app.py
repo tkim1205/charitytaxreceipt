@@ -12,11 +12,10 @@ import os
 smtp_server = "smtp.gmail.com"
 smtp_port = 587
 
-# Path to wkhtmltopdf binary
-wkhtmltopdf_path = os.path.join(os.getcwd(), 'wkhtmltopdf', 'bin', 'wkhtmltopdf')
-if not os.path.isfile(wkhtmltopdf_path):
-    raise FileNotFoundError("wkhtmltopdf executable not found at %s" % wkhtmltopdf_path)
-# Configure pdfkit to use the binary
+# Specify the path to wkhtmltopdf if it's not in your PATH
+path_to_wkhtmltopdf = '/usr/bin/wkhtmltopdf'  # Update this path as needed
+if not os.path.isfile(path_to_wkhtmltopdf):
+    raise FileNotFoundError("wkhtmltopdf executable not found at %s" % path_to_wkhtmltopdf)
 config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
 
 # Get the current date and year
