@@ -38,7 +38,7 @@ def main():
 
 
     st.subheader("Actions")
-    test_mode = st.radio('Select Mode', ['Preview', 'Send Test', 'Send Real'])
+    action_mode = st.radio('Select Mode', ['Preview', 'Send Test', 'Send Real'])
 
     if st.button("Submit"):
         try:
@@ -102,25 +102,54 @@ def main():
                         # Set output file name    
                         output_file_name = "TTHC - {year} Tax Receipt - {id}.pdf".format(year = current_year, id = receipt_id)
 
-                        # Add CSS for border
-                        border_css = """
-                        <style>
-                            .bordered {
-                                border: 1px solid black;
-                                padding: 10px;
-                            }
-                        </style>
-                        """
+                        # If action_mode is Preview, then show the email and tax receipt
+                        if action_mode == 'Preview':
+                            # Add CSS for border
+                            border_css = """
+                            <style>
+                                .bordered {
+                                    border: 1px solid black;
+                                    padding: 10px;
+                                }
+                            </style>
+                            """
 
-                        # Apply CSS and add bordered class to the HTML content
-                        st.markdown(border_css, unsafe_allow_html=True)
-                        st.markdown(f'<div class="bordered">{email_html}</div>', unsafe_allow_html=True)
-                        st.markdown('#')
-                        st.markdown(f'<div class="bordered">{tax_receipt_html}</div>', unsafe_allow_html=True)
+                            # Apply CSS and add bordered class to the HTML content
+                            st.markdown(border_css, unsafe_allow_html=True)
+                            st.markdown(f'<div class="bordered">{email_html}</div>', unsafe_allow_html=True)
+                            st.markdown('#')
+                            st.markdown(f'<div class="bordered">{tax_receipt_html}</div>', unsafe_allow_html=True)
 
-                        break
-                    
-                #st.success('Done!')
+                            break
+                        
+                        # If action_mode is Send Test, then send email to the sender
+                        elif action_mode == 'Send Test':
+                            # Create a PDF file
+                            pdf = FPDF()
+                            pdf.add_page()
+                            pdf.set_font("Arial", size = 12)
+                            pdf.write_html(tax_receipt_html)
+                            pdf.output(output_file_name)
+                            
+                            # Send email
+                            msg = MIMEMultipart()
+                            msg['From'] = gmail_sender
+                            msg['To'] = gmail_sender
+                            msg['Subject'] = subject
+                            msg.attach(MIMEText(email_html, 'html'))
+                            with open(output_file_name, "rb") as f:
+                                attach = MIMEApplication(f.read(),_subtype="pdf")
+                                attach.add_header('Content-Disposition','attachment',filename=output_file_name)
+                            msg.attach(attach)
+                            
+                            server = smtplib.SMTP(smtp_server, smtp_port)
+                            server.starttls()
+                            server.login(gmail_sender, gmail_app_pw)
+                            server.send_message(msg)
+                            server.quit()
+                            st.success('Test email sent successfully!')
+                        
+                st.success('Done!')
             
             elif excel_email_list is None:
                 st.write("Please choose a valid Excel file")
