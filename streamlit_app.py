@@ -8,6 +8,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 import datetime
 from io import StringIO
+import pdfkit
 #from xhtml2pdf import pisa
 
 smtp_server = "smtp.gmail.com"
@@ -127,12 +128,8 @@ def main():
                         
                         # If action_mode is Send Test, then send email to the sender
                         elif action_mode == 'Send Test':
-                            # Create a PDF file
-                            pdf = PDF()
-                            pdf.add_page()
-                            pdf.set_font("Arial", size = 12)
-                            pdf.write_html(tax_receipt_html)
-                            pdf.output(output_file_name)
+                            # Create a PDF file using pdfkit
+                            pdfkit.from_string(tax_receipt_html, output_file_name)
                             
                             # Send email
                             msg = MIMEMultipart()
