@@ -3,3 +3,5 @@ openpyxl
 pdfkit
 wkhtmltopdf
 weasyprint
+cffi
+cairocffi

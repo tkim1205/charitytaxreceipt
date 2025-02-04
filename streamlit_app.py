@@ -15,6 +15,10 @@ from weasyprint import HTML
 smtp_server = "smtp.gmail.com"
 smtp_port = 587
 
+# Specify the path to wkhtmltopdf if it's not in your PATH
+path_to_wkhtmltopdf = '/usr/local/bin/wkhtmltopdf'  # Update this path as needed
+config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
+
 # Get the current date and year
 current_date = datetime.datetime.now().strftime("%Y-%m-%d")
 current_year = datetime.datetime.now().year
@@ -129,8 +133,8 @@ def main():
                         
                         # If action_mode is Send Test, then send email to the sender
                         elif action_mode == 'Send Test':
-                            # Create a PDF file using WeasyPrint
-                            HTML(string=tax_receipt_html).write_pdf(output_file_name)
+                            # Create a PDF file using pdfkit
+                            pdfkit.from_string(tax_receipt_html, output_file_name, configuration=config)
                             
                             # Send email
                             msg = MIMEMultipart()
